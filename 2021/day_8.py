@@ -35,13 +35,9 @@ for signal_patterns, output_values in entries:
         if len(wires) == 6:
             if len(wires & wires_1) == 1:
                 wires_6 = wires
-                break
-
-    for wires in signal_patterns:
         if len(wires) == 5:
-            if len(wires_1 & wires) == 2:
+            if len(wires & wires_1) == 2:
                 wires_3 = wires
-                break
 
     translation[(wires_7 - wires_1).pop()] = "a"
     translation[(wires_4 - wires_3).pop()] = "b"
