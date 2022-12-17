@@ -18,7 +18,8 @@ def update_chamber(chamber, rock_shape, rock_position):
             chamber_x = rock_position[0] + rock_x
             if not chamber_y < len(chamber):
                 chamber.append([0] * 7)
-            chamber[chamber_y][chamber_x] = rock_shape[rock_y][rock_x]
+            if rock_shape[rock_y][rock_x]:
+                chamber[chamber_y][chamber_x] = rock_shape[rock_y][rock_x]
 
 
 def main():
@@ -72,9 +73,6 @@ def main():
             else:
                 update_chamber(chamber, rock_shape, rock_position)
                 break
-
-    # for row in reversed(chamber[1:]):
-    #     print(*("#" if elem else "." for elem in row), sep="")
 
     print(len(chamber)-1)
 
