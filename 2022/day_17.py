@@ -74,14 +74,9 @@ def get_tower_height(rock_amount, rock_shapes, jet_patterns):
             if jet_pattern_counter == 0:
                 jet_passes += 1
 
-            if jet_direction == "<":
-                new_rock_position = (rock_position[0]-1, rock_position[1])
-                if not collides(chamber, rock_shape, new_rock_position):
-                    rock_position = new_rock_position
-            else:
-                new_rock_position = (rock_position[0]+1, rock_position[1])
-                if not collides(chamber, rock_shape, new_rock_position):
-                    rock_position = new_rock_position
+            new_rock_position = (rock_position[0] + (1 if jet_direction == ">" else -1), rock_position[1])
+            if not collides(chamber, rock_shape, new_rock_position):
+                rock_position = new_rock_position
 
             new_rock_position = (rock_position[0], rock_position[1]-1)
             if not collides(chamber, rock_shape, new_rock_position):
