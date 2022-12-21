@@ -1,5 +1,4 @@
 from operator import add, sub, mul, floordiv, eq
-import time
 
 
 class Expression:
@@ -8,18 +7,19 @@ class Expression:
         try:
             return Number(int(expr_str))
         except ValueError:
-            left, op, right = expr_str.split(" ")
-            match op:
+            left_str, op_str, right_str = expr_str.split(" ")
+            match op_str:
                 case "+":
-                    return ExpressionBinary(left, right, add)
+                    op = add
                 case "-":
-                    return ExpressionBinary(left, right, sub)
+                    op = sub
                 case "*":
-                    return ExpressionBinary(left, right, mul)
+                    op = mul
                 case "/":
-                    return ExpressionBinary(left, right, floordiv)
-                case "=":
-                    return ExpressionBinary(left, right, eq)
+                    op = floordiv
+                case _:
+                    op = eq
+            return ExpressionBinary(left_str, right_str, op)
 
     def find_path_to_name(self, name):
         return None
@@ -49,9 +49,14 @@ class ExpressionBinary(Expression):
 
     def calculate_other(self, desired_result, side_str):
         side, rest = side_str[0], side_str[1:]
-        side_to_calculate = self.right if side == ">" else self.left
-        known_side = self.left if side == ">" else self.right
+        if side == "<":
+            side_to_calculate = self.left
+            known_side = self.right
+        else:
+            side_to_calculate = self.right
+            known_side = self.left
         known_side_result = known_side.get_result()
+
         if self.op is add:
             required_value = desired_result - known_side_result
         elif self.op is sub:
@@ -60,7 +65,7 @@ class ExpressionBinary(Expression):
             else:
                 required_value = known_side_result - desired_result
         elif self.op is mul:
-            required_value = desired_result / known_side_result
+            required_value = desired_result // known_side_result
         elif self.op is floordiv:
             if side_to_calculate is self.left:
                 required_value = desired_result * known_side_result
@@ -104,13 +109,10 @@ def main():
 
     print(root.get_result())
 
-    start = time.perf_counter()
     root.op = eq
     me = variables["humn"]
     path = root.find_path_to_name(me)
     print(root.calculate_other(1, path))
-    end = time.perf_counter()
-    print(end-start)
 
 
 if __name__ == "__main__":
