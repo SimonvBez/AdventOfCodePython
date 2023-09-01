@@ -49,17 +49,17 @@ def main():
         for monkey in monkeys_copy:
             monkey.turn(monkeys_copy, test_product, True)
 
-    monkeys_copy.sort(key=lambda m: m.inspect_count)
-    print(monkeys_copy[-1].inspect_count * monkeys_copy[-2].inspect_count)
+    monkeys_copy.sort(key=lambda m: m.inspect_count, reverse=True)
+    print(monkeys_copy[0].inspect_count * monkeys_copy[1].inspect_count)
 
     monkeys_copy = deepcopy(monkeys)
     for _ in range(10000):
         for monkey in monkeys_copy:
             monkey.turn(monkeys_copy, test_product, False)
 
-    monkeys_copy.sort(key=lambda m: m.inspect_count)
+    monkeys_copy.sort(key=lambda m: m.inspect_count, reverse=True)
     print()
-    print(monkeys_copy[-1].inspect_count * monkeys_copy[-2].inspect_count)
+    print(monkeys_copy[0].inspect_count * monkeys_copy[1].inspect_count)
 
 
 if __name__ == "__main__":

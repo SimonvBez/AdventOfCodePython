@@ -1,3 +1,7 @@
+import time
+import ctypes
+
+
 def adjacent_iter(x, y, len_x, len_y):
     if x-1 >= 0:
         yield x-1, y
@@ -28,6 +32,19 @@ def count_steps(heightmap, start_pos, step_condition, result_condition):
                             return step_count
                         mapped_coordinates.add(adj_coord)
                         next_map_queue.append(adj_coord)
+
+        gHandle = ctypes.windll.kernel32.GetStdHandle(ctypes.c_long(-11))
+        ctypes.windll.kernel32.SetConsoleCursorPosition(gHandle, ctypes.c_ulong(0))
+        print_str = ""
+        for x, row in enumerate(heightmap):
+            for y, char in enumerate(row):
+                if (x, y) in mapped_coordinates:
+                    print_str += "#"
+                else:
+                    print_str += " "
+            print_str += "\n"
+        print(print_str)
+        time.sleep(0.01)
 
         current_map_queue = next_map_queue
         step_count += 1
@@ -60,6 +77,7 @@ def main():
         lambda tile_coord: tile_coord == end_pos
     ))
     print()
+    time.sleep(2)
     print(count_steps(
         heightmap,
         end_pos,

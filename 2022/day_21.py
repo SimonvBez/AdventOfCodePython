@@ -112,6 +112,7 @@ def main():
     root.op = eq
     me = variables["humn"]
     path = root.find_path_to_name(me)
+    print()
     print(root.calculate_other(1, path))
 
 

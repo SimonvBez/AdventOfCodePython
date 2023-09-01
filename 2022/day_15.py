@@ -8,17 +8,13 @@ class IntervalTree:
     def add_interval(self, interval):
         self.intervals.append(interval)
 
-    def clip_intervals(self, clip_range):
-        self.intervals = [[max(clip_range[0], interval[0]), min(clip_range[1], interval[1])] for interval in self.intervals if interval[0] <= clip_range[1]]
-
     def merge_intervals(self):
-        self.intervals = [interval for interval in self.intervals if interval[0] <= interval[1]]
         self.intervals.sort()
         i = 0
         while i < len(self.intervals)-1:
             left = self.intervals[i]
             right = self.intervals[i+1]
-            if left[0] <= right[0] <= left[1]:
+            if right[0] <= left[1]:
                 self.intervals[i:i+2] = [[left[0], max(left[1], right[1])]]
             else:
                 i += 1

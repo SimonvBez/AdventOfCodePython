@@ -9,11 +9,9 @@ with open("day_1_input", "r") as f:
             elfs.append(elf)
             elf = 0
 
-top_calories = max(elfs)
-print(top_calories)
+print(max(elfs))
 
 calories_per_elf_sorted = sorted(elfs)
 top_3_calories = calories_per_elf_sorted[-3:]
-top_3_calories_sum = sum(top_3_calories)
 print()
-print(top_3_calories_sum)
+print(sum(top_3_calories))
